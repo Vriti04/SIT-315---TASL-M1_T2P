@@ -2,7 +2,7 @@ const int motion_pin = 3;
 const int button = 2;
 const int led = 4;
 
-bool buttonStatus = false;
+const int led2 = 11;
 
 void setup() {
   Serial.begin(9600);
@@ -10,34 +10,32 @@ void setup() {
   pinMode(button, INPUT_PULLUP); 
   pinMode(led, OUTPUT);
 
+  pinMode(led2, OUTPUT);
+
+ 
   attachInterrupt(digitalPinToInterrupt(button), Interrupt, CHANGE);
 }
 
-void loop() {
-  Interrupt();
-  if (!buttonStatus) {
-    
-    int motionDetected = digitalRead(motion_pin);
-    
-    if (motionDetected == HIGH) {
-      Serial.println("MOTION DETECTED");
-      digitalWrite(led, HIGH);
-    } else {
-      Serial.println("MOTION NOT DETECTED");
-      digitalWrite(led, LOW);
-    }
-    delay(500);
-  }
-}
-
-
 void Interrupt() {
- if (digitalRead(button) == LOW) { 
-    digitalWrite(led, HIGH);
+  if (digitalRead(button) == HIGH) { 
+    digitalWrite(led2, HIGH);
     Serial.println("INTERRUPT");
-  } else {
-    digitalWrite(led, LOW); 
-    Serial.println("NO INTERRUPT :D");
+    digitalWrite(led2, LOW);
   }
-  delay(100);
+  delay(1000);
 }
+
+void loop() {
+  // Motion sensor
+  int motionDetected = digitalRead(motion_pin);
+  if (motionDetected == HIGH) {
+    Serial.println("DETECTED");
+    digitalWrite(led, HIGH);
+    delay(1000);
+  } else {
+    Serial.println("MOTION NOT DETECTED");
+    digitalWrite(led, LOW);
+    delay(1000);
+  }
+}
+  
