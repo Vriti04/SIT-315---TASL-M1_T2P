@@ -1,21 +1,23 @@
-const int motion_pin = 3;
-const int button = 2;
-const int led = 4;
+const int motion_pin = 3; //motion sensor pin is set to 3
+const int button = 2; //button pin is set to 2
+const int led = 4; //led pin is set to 4
 
-const int led2 = 11;
+const int led2 = 11; //led2 pin is set to 11
 
 void setup() {
+//communication with serial monitor begins
   Serial.begin(9600);
-  pinMode(motion_pin, INPUT);
-  pinMode(button, INPUT_PULLUP); 
-  pinMode(led, OUTPUT);
+  pinMode(motion_pin, INPUT); //motion sensor pin set as input pin
+  pinMode(button, INPUT_PULLUP); //button pin set as input pin, with a pullup resistance to keep the button voltage high if there's no connection
+  pinMode(led, OUTPUT); //led pin set as output pin
 
-  pinMode(led2, OUTPUT);
+  pinMode(led2, OUTPUT); //led2 pin set as output pin
 
  
-  attachInterrupt(digitalPinToInterrupt(button), Interrupt, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(button), Interrupt, CHANGE); //interrupt having the pin for button as input (so the interrupt happens when button pressed), along with the Interrupt function (Declared later) and the mode of interrupt is set to CHANGE (so interrupt happens when the pin is changing mode)
 }
 
+//function for interrupt which simply turns on the led for detection
 void Interrupt() {
   if (digitalRead(button) == HIGH) { 
     digitalWrite(led2, HIGH);
@@ -26,7 +28,7 @@ void Interrupt() {
 }
 
 void loop() {
-  // Motion sensor
+  // Motion sensor working from previous code
   int motionDetected = digitalRead(motion_pin);
   if (motionDetected == HIGH) {
     Serial.println("DETECTED");
