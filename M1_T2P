@@ -2,7 +2,7 @@ const int motion_pin = 3; //motion sensor pin is set to 3
 const int button = 2; //button pin is set to 2
 const int led = 4; //led pin is set to 4
 
-const int led2 = 11; //led2 pin is set to 11
+const int led2 = 13; //led2 pin is set to 13
 
 void setup() {
 //communication with serial monitor begins
